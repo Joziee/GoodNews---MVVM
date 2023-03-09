@@ -58,6 +58,7 @@
 		230F833F29BA4A3000D6BCFA /* GoodNews */ = {
 			isa = PBXGroup;
 			children = (
+				230F835C29BA5ACD00D6BCFA /* Models */,
 				230F835929BA50A200D6BCFA /* Services */,
 				230F835429BA4A8300D6BCFA /* Controllers */,
 				230F834029BA4A3000D6BCFA /* AppDelegate.swift */,
@@ -84,6 +85,13 @@
 				230F835A29BA50BE00D6BCFA /* WebService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		230F835C29BA5ACD00D6BCFA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
