@@ -8,6 +8,8 @@
 import UIKit
 
 class NewsListTableViewController: UITableViewController {
+    
+    private var articleListVM: ArticleListViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,37 +23,52 @@ class NewsListTableViewController: UITableViewController {
     
     
     private func setup() {
+        
         self.navigationItem.rightBarButtonItem = self.editButtonItem
         self.clearsSelectionOnViewWillAppear = false
         
         let url = URL(string: "https://newsapi.org/v2/top-headlines?country=us&apiKey=18929a4d97d347128bf237e9d29fc571")!
         
-        WebService().getArticles(url: url) { _ in
+        WebService().getArticles(url: url) { articles in
             
+            if let articles = articles {
+                self.articleListVM = ArticleListViewModel(articles: articles)
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+                
+            }
         }
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return self.articleListVM == nil ? 0 : self.articleListVM.numberOfSections
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        
+        return self.articleListVM.numberOfRowsInSection(section)
     }
 
-    /*
+   
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+      //  let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 
-        // Configure the cell...
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ArticleTableViewCell else {
+            fatalError("ArticleTableViewCell not found")
+        }
+        
+        let articleVM = self.articleListVM.ArticleAtIndex(indexPath.row)
+        
+        cell.titleLabel.text = articleVM.title
+        cell.descriptionLabel.text = articleVM.description
 
         return cell
     }
-    */
+   
 
     /*
     // Override to support conditional editing of the table view.
