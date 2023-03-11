@@ -11,35 +11,26 @@ class NewsListTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         
         setup()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-       // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        
     }
-
+    
+    
     
     private func setup() {
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-       // UINavigationBar.appearance().barTintColor = UIColor(displayP3Red: 47/255, green: 54/255, blue: 64/255, alpha: 1.0)
+        self.navigationItem.rightBarButtonItem = self.editButtonItem
+        self.clearsSelectionOnViewWillAppear = false
         
         let url = URL(string: "https://newsapi.org/v2/top-headlines?country=us&apiKey=18929a4d97d347128bf237e9d29fc571")!
         
-        Webservice().getArticles(url: url) { _  in
+        WebService().getArticles(url: url) { _ in
             
         }
-        
-        
-        
     }
-    
-    
-    
-    
-    
+
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -78,7 +69,7 @@ class NewsListTableViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
     */
 

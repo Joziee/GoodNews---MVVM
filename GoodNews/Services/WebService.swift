@@ -8,23 +8,32 @@
 import Foundation
 
 
-class Webservice {
+
+class WebService {
     
-    // Completion handler gives us what we exactly want from the Data in this case Article Array
-    
-    func getArticles(url: URL, completion: @escaping([Any]?) -> ()) {
+    func getArticles(url: URL, completion: @escaping ([Article]?) -> ()){
+        
+        // The first test is can we evern get data from the url or not
         
         URLSession.shared.dataTask(with: url) { data, response, error in
             
             if let error = error {
                 print(error.localizedDescription)
                 completion(nil)
-                // fire completion block and pass nil because we ddint find any articles
-            } else if let data = data {
- 
-                print(data)
             }
-            
-        }.resume()
+            else if let data = data {
+                
+                
+                let articleList = try?  JSONDecoder().decode(ArticleList.self, from: data)
+                
+                if let articleList = articleList {
+                    completion(articleList.articles)
+                }
+                
+                print(articleList?.articles)
+                
+                
+            }
+        } .resume()
     }
 }
